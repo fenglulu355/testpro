@@ -104,6 +104,7 @@
   </div>
 </template>
 <script>
+  import scdata from '../data.js'
   export default {
     name: 'pie',
     data() {
@@ -144,7 +145,7 @@
         datas: [
           ['product', 'sos', '脱帽', '倒地', '低电量', '超员', '超时', '未授权'],
           ['9.30', 1, 2, 3, 4, 5, 6, 7],
-         
+
         ],
         drawworkbars: [
           ['吊装', 1],
@@ -199,6 +200,9 @@
 
         }]
       }
+    },
+    created() {
+      this.scdata
     },
     mounted() {
       this.drawallnum()
@@ -412,7 +416,9 @@
             left: "center",
             top: "center",
             style: {
-              text: "应巡点位\n\n共计：" + `${this.aaa}`,
+              // text: "应巡点位\n\n共计：" + `${this.infos.patrolTotal}`,
+              text: "应巡点位\n\n共计：15",
+
               textAlign: "center",
               fill: "#fff",
               fontSize: 13
@@ -421,17 +427,17 @@
           series: [{
             name: '历史巡检',
             type: 'pie',
-            radius: ['50%', '70%'], //饼图大小
+            radius: ['40%', '60%'], //饼图大小
             labelLine: { //图形外文字线
               normal: {
-                length: 10,
-                length2: 20
+                length: 25,
+                length2: 40
               }
 
             },
             label: {
               normal: {
-                formatter: ' {b|{b}}:{c|{c}%}\n ', //图形外文字上下显示
+                formatter: ' {c|{c}个}\n\n{b|{b}} ', //图形外文字上下显示
                 borderWidth: 20,
                 borderRadius: 4,
                 padding: [0, -35], //文字和图的边距
@@ -996,7 +1002,7 @@
             .Inspection {
               margin-top: 20px;
               width: 100%;
-              height: 300px;
+              height: 240px;
             }
           }
 

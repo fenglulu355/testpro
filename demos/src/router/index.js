@@ -15,6 +15,10 @@ export default new Router({
             path: '/echarts/pie',
             name: 'echartspie',
             component: () => import('../pages/echartsdemo/piedemo.vue')
+        }, {
+            path: '/echarts/bar',
+            name: 'echartsbar',
+            component: () => import('../pages/echartsdemo/bardemo.vue')
         },
         {
             path: '/other',

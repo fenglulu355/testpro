@@ -8,6 +8,9 @@
         <div class="list">
           <router-link to="/echarts/pie">饼状图</router-link>
         </div>
+        <div class="list">
+          <router-link to="/echarts/bar">柱状图</router-link>
+        </div>
       </li>
       <li>
         <p class="title">

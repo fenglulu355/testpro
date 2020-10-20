@@ -24,7 +24,7 @@
         animate: false,
         ani: null,
         items: [{
-            name: "霸气外露的xxx体育工作1"
+            name: "霸气外露的xxx体育工作体育工作体育工作体育工作体育工作体育工作体育工作1"
           },
           {
             name: "霸气外露的xxx体育工作2"
@@ -106,8 +106,14 @@
   }
 
   .lableli {
-    height: 30px;
+
     border-bottom: 1px dashed rgb(238, 91, 6);
+
+
+  }
+
+    .lableli p {
+    line-height: 30px;
   }
 
   .anim {
