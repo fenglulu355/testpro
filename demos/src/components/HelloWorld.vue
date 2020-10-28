@@ -27,6 +27,8 @@
         <div class="list">
           <router-link to="/ani/lablescolor">列表无限滚动</router-link>
           <router-link to="/ani/numscolor">数字滚动</router-link>
+          <router-link to="/ani/textscolor">文字滚动</router-link>
+
         </div>
       </li>
       <li>

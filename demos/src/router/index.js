@@ -67,6 +67,12 @@ export default new Router({
                     path: 'numscolor',
                     name: 'numscolor',
                     component: () => import('../pages/animate/numscroll.vue')
+                },  
+                // 文字滚动
+                {
+                    path: 'textscolor',
+                    name: 'textscolor',
+                    component: () => import('../pages/animate/textscollr/index.vue')
                 },
             ],
 
