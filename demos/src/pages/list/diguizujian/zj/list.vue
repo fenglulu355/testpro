@@ -2,7 +2,7 @@
   <div class="dgbox">
     <div class="list-item" v-for="(item, index) in list" :key="index">
       <div class="item-name" @click="cur($el,item)">
-        <p class="name">{{item.name}}</p>
+        <p class="name">{{item.label}}</p>
       </div>
       <div v-if="item.children" class="children-item">
         <list :list="item.children"></list>
@@ -30,7 +30,8 @@
     width: 100%;
     height: 100%;
     margin: 0 auto;
-
+    border: 1px solid #8f8f8f;
+    overflow-y: scroll;
   }
 
   .list-item {
@@ -53,11 +54,26 @@
     /* border-bottom: 1px dashed #eeeeee; */
   }
 
+  .children-item .dgbox {
+    border: none;
+  }
+
   .children-item .list-item {
     width: 100%;
     box-sizing: border-box;
     padding: 2px 0px 2px 5px;
     font-size: 15px;
+  }
+
+  .dgbox {
+    -ms-overflow-style: none;
+    /*火狐下隐藏滚动条*/
+    overflow: -moz-scrollbars-none;
+  }
+
+  .dgbox::-webkit-scrollbar {
+    display: none;
+    /* Chrome Safari */
   }
 
 </style>

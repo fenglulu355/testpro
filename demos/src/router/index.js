@@ -81,7 +81,7 @@ export default new Router({
                 {
                     path: 'zj',
                     name: 'zj',
-                    component: () => import('../pages/list/diguizujian/index.vue')
+                    component: () => import('../pages/list/diguizujian/zj/index.vue')
                 }
             ],
 
