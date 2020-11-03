@@ -67,7 +67,7 @@ export default new Router({
                     path: 'numscolor',
                     name: 'numscolor',
                     component: () => import('../pages/animate/numscroll.vue')
-                },  
+                },
                 // 文字滚动
                 {
                     path: 'textscolor',
@@ -92,6 +92,20 @@ export default new Router({
             ],
 
         },
+        // 联动
+        {
+            path: '/ld',
+            name: 'ld',
+            component: main,
+            children: [
+                // 省市区三级联动
+                {
+                    path: 'ssq',
+                    name: 'ssq',
+                    component: () => import('../pages/picker/Regional-linkage-master/Regional-linkage')
+                }
+            ],
 
+        },
     ]
 })

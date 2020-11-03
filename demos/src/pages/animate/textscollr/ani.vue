@@ -23,6 +23,7 @@
         disArr: []
       }
     },
+
     mounted() {
       // var that = this
       var item = this.$refs.list
