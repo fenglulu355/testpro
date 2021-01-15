@@ -1,59 +1,88 @@
 <template>
-  <div>
-    <p @click="change">dian</p>
-    <p @click="change1">111</p>
+  <!-- 测试-->
+  <div id="palyback">
+    <div :class="{'else': onswitch}">
+      <div id="player-container-id"></div>
+    </div>
+    <div :class="{'else': !onswitch}">
+      <div id="player-container"></div>
+    </div>
+    <div class="box-title" @click="onchange">切换</div>
   </div>
 </template>
+ 
 <script>
   export default {
     data() {
       return {
-        arr: ['2020', '4', '21'],
-        sarr: ['2020', '04', '9'],
-        earr: ['2020', '10', '22']
+        player: null,
+        onswitch: false
       }
     },
+ 
+    mounted() {
+      this.playVideo()
+    },
+ 
     methods: {
-      change1() {
-        var mydate1 = new Date("2020-4-08");
-        var mydate2 = new Date("2020-10-02");
-        console.log(mydate1, mydate2)
-        let a = this.compare(mydate1, mydate2, 6)
-        console.log(a)
+      playVideo() {
+        document.getElementById('player-container-id').innerHTML = ""
+        this.player = new TcPlayer('player-container-id', {
+          "m3u8": ' http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8', //请替换成实际可用的播放地址
+          "autoplay": true, //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+          // "coverpic": img,
+          "width": '100%', //视频的显示宽度，请尽量使用视频分辨率宽度
+          "height": '100%', //视频的显示高度，请尽量使用视频分辨率高度
+          "remember": 1
+        });
+ 
+        this.player = new TcPlayer('player-container', {
+          "m3u8": 'http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8', //请替换成实际可用的播放地址
+          "autoplay": true, //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+          // "coverpic": img,
+          "width": '100%', //视频的显示宽度，请尽量使用视频分辨率宽度
+          "height": '100%', //视频的显示高度，请尽量使用视频分辨率高度
+          "remember": 1
+        });
       },
-      compare(mydate1, mydate2, month) {
-        console.log(mydate1, mydate2, month)
-        mydate1.setMonth(mydate1.getMonth() + month);
-        var y = mydate1.getFullYear();
-        var m = parseInt(mydate1.getMonth()) + 1;
-        var d = mydate1.getDate();
-        if (m >= (mydate2.getMonth() + 1)) {
-          return true;
-        }
-        return false;
-      },
-      change() {
-        let arr = this.arr,
-          sarr = this.sarr,
-          earr = this.earr,
-          a = sarr[1].split(''),
-          b = earr[1].split('')
-        console.log(arr, sarr, earr, a, b)
-        a[0] == 0 ? a = Number(a[1]) : a = Number(sarr[1])
-        b[0] == 0 ? b = Number(b[1]) : b = Number(earr[1])
-        console.log(a, b)
-        // 同一年
-        if (sarr[0] == earr[0]) {
-          console.log('同一年')
-          let m = b - a
-          if (m == 6) {
-
-          }
-
-        }
-      },
+ 
+      // 切换
+      onchange() {
+        this.onswitch = !this.onswitch
+      }
     }
   }
-
 </script>
-<style></style>
+ 
+<style scoped>
+  #palyback {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding-top: 2rem;
+    background-color: #1c302e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 59.375rem;
+    position: relative;
+  }
+  .else {
+    width: 400px;
+    position: absolute;
+    top: 3%;
+    right: 2%;
+    z-index: 100;
+  }
+ 
+  .box-title {
+    width: 50px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: pink;
+    position: absolute;
+    bottom: 3%;
+    right: 2%;
+  }
+</style>

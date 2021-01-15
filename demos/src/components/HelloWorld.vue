@@ -47,6 +47,14 @@
           <router-link to="/ld/ssq">省市区三级联动</router-link>
         </div>
       </li>
+      <li>
+        <p class="title">
+          表格
+        </p>
+        <div class="list">
+          <router-link to="/tblist/list">表格列表</router-link>
+        </div>
+      </li>
     </ul>
   </div>
 </template>

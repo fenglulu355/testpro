@@ -107,5 +107,20 @@ export default new Router({
             ],
 
         },
+        // 表格
+        {
+            path: '/tblist',
+            name: 'tblist',
+            component: main,
+            children: [
+                // 省市区三级联动
+                {
+                    path: 'list',
+                    name: 'list',
+                    component: () => import('../pages/tblist/list.vue')
+                }
+            ],
+
+        },
     ]
 })
