@@ -1,0 +1,139 @@
+<html>
+
+<head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!--
+        以下CSS地址请在安装软件了替换成本地的地址
+        CSS地址请使用:
+        http://localhost:9000/bigemap.js/v2.1.0/bigemap.css
+        软件下载地址 http://www.bigemap.com/reader/download/detail201802017.html
+    -->
+    <link href='http://www.bigemap.com:9000/bigemap.js/v2.1.0/bigemap.css' rel='stylesheet' />
+    <!--
+        JS地址请使用：
+        http://localhost:9000/bigemap.js/v2.1.0/bigemap.js
+    -->
+    <script src='http://www.bigemap.com:9000/bigemap.js/v2.1.0/bigemap.js'></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .inputbox {
+            width: 420px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .lat {
+            width: 150px;
+
+        }
+
+        .lng {
+            width: 150px;
+            height: 200px;
+        }
+
+        .text {
+            width: 50px;
+        }
+
+        .iptbox {
+            position: fixed;
+            top: 150px;
+            left: 100px;
+            z-index: 1111111111;
+        }
+
+        .save {
+         cursor: pointer;
+        }
+
+        .save:hover {
+            color: red;
+        }
+
+        .latlng {
+            position: relative;
+            bottom: 50px;
+        }
+    </style>
+    <title>Google Map Streets</title>
+</head>
+
+<body>
+    <div id='map'></div>
+    <div class="iptbox">
+        <div>
+            <textarea name="" id="latlng" cols="40" rows="7" placeholder="[10.1,123.01],[10.1,123.01]"></textarea>
+        </div>
+        <div style="margin: 10px 0;">
+            <textarea name="" id="circle" cols="40" rows="2" placeholder="1,2,4    为空时数量显示1正常"></textarea>
+        </div>
+        <button  class="save"  onclick="save()">保存</button>
+        <!-- <div class="save">保存</div> -->
+    </div>
+</body>
+<script>
+    // 软件配置信息地址，软件安装完成之后使用本地地址，如：http://localhost:9000
+    BM.Config.HTTP_URL = 'https://olmap.zolbon.com:3000';
+    //BM.Config.HTTP_URL = 'http://www.bigemap.com:9000';
+    // 在ID为map的元素中实例化一个地图，并设置地图的ID号为 bigemap.baidu-map，ID号程序自动生成，无需手动配置，并设置地图的投影为百度地图 ，中心点，默认的级别和显示级别控件
+    var map = BM.map('map', 'bigemap.googlemap-satellite', { center: [30.593528634951593, 104.06578392147716], zoom: 16, zoomControl: false, attributionControl: false });
+    console.info(map)
+    //实例化航拍的图
+    var offline = BM.tileLayer('bigemap.googlemap-satellite');
+    var markers = [], polyline;
+    //实例化谷歌卫星地图
+    var google_satellite = BM.tileLayer('bigemap.googlemapen-satellite');
+    //将两个图层添加在地图上面
+    google_satellite.addTo(map);
+    offline.addTo(map)
+    function save() {
+        markers.map((item) => {
+            item.remove();
+        })
+        polyline && polyline.remove();
+        markers = [];
+        polyline = null;
+        let lnglatarr = [], circle = []
+        lnglatarr = document.getElementById('latlng').value;
+        circle = document.getElementById('circle').value;//不需要半径时请隐藏有关circle和arr3个代码
+        let arr1 = lnglatarr.split('],')
+        let arr2 = []
+        let arr3 = circle.split(',')
+        if (arr3.length != arr1.length) {
+            alert('半径和坐标数量不一致！半径：' + arr3.length + '坐标：' + arr1.length)
+            return
+        }
+        for (var i in arr1) {
+            let marker
+            if (arr1[i].length === 0) continue;
+            let list = arr1[i].replace('[', '').split(',').map((item) => {
+                return parseFloat(item);
+            })
+            marker = BM.marker(list).addTo(map);
+            marker.bindTooltip(`${i}`).openTooltip();
+            markers.push(marker);
+            BM.circle(list, { radius: arr3[i] }).addTo(map);
+            map.setView(list)
+            arr2.push(list);
+        }
+        console.log(arr2, 'arr2')
+        polyline = BM.polyline(arr2, { color: 'blue' }).addTo(map);
+        map.fitBounds(polyline.getBounds())
+    }
+</script>
+
+</html>

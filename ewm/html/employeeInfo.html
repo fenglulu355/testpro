@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../html/employ.css">
+    <title>用户信息</title>
+</head>
+
+<body>
+    <div class="employeeInfoHtml">
+        <header>
+            <span>员工信息</span>
+        </header>
+        <div class="container">
+            <div class="img">
+                <img id="headUrl" src="" alt="">
+            </div>
+            <p class="userName" id="employeeName"></p>
+            <ul id="navUl">
+                <li id="navBase" tabid="1" class="choseClass">基本信息</li>
+                <li id="navWork" tabid="2" class="">工作信息</li>
+                <li id="navBad" tabid="3" class="unshow">不良记录</li>
+            </ul>
+            <div class="content" id="content">
+                <div id="baseInfo" class=" baseInfo show">
+                </div>
+                <div id="workInfo" class=" baseInfo">
+                </div>
+                <div class=" badInfo ">
+                    <h3>不良记录</h3>
+                    <div id="badInfo"></div>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="../js/jquery-3.5.1.min.js"></script>
+<script src="../js/employeeInfo.js"></script>
+
+</html>

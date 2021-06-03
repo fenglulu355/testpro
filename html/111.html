@@ -1,0 +1,111 @@
+<!--
+ * @Author: fenglulu
+ * @Date: 2020-11-09 16:38:03
+ * @LastEditors: fenglulu
+ * @LastEditTime: 2020-11-11 13:38:24
+ * @FilePath: \html\111.html
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!--
+        以下CSS地址请在安装软件了替换成本地的地址
+        CSS地址请使用:
+        http://localhost:9000/bigemap.js/v2.1.0/bigemap.css
+        软件下载地址 http://www.bigemap.com/reader/download/detail201802017.html
+    -->
+    <link href='http://www.bigemap.com:9000/bigemap.js/v2.1.0/bigemap.css' rel='stylesheet' />
+    <!--
+        JS地址请使用：
+        http://localhost:9000/bigemap.js/v2.1.0/bigemap.js
+    -->
+    <script src='http://www.bigemap.com:9000/bigemap.js/v2.1.0/bigemap.js'></script>
+    <!--引入对应的JS+CSS 相关下载地址 http://www.bigemap.com/Public/offline/polyline_arrow/arrow.zip-->
+    <script type="text/javascript" src="http://www.bigemap.com/Public/offline/polyline_arrow/patternUtils.js"></script>
+    <script type="text/javascript" src="http://www.bigemap.com/Public/offline/polyline_arrow/symbol.js"></script>
+    <script type="text/javascript" src="http://www.bigemap.com/Public/offline/polyline_arrow/polyline_arrow.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    </style>
+    <title>Google Map Streets</title>
+</head>
+<body>
+<div id='map'></div>
+<script>
+   // 软件配置信息地址，软件安装完成之后使用本地地址，如：http://localhost:9000
+   BM.Config.HTTP_URL = 'http://www.bigemap.com:9000';
+    
+    // 在ID为map的元素中实例化一个地图，并设置地图的ID号为 bigemap.googlemap-streets，ID号程序自动生成，无需手动配置，并设置地图的投影为百度地图 ，中心点，默认的级别和显示级别控件
+    var map = BM.map('map', 'bigemap.googlemap-streets', { center:[34,108], zoom: 4, zoomControl: true,attributionControl:false });
+    //添加对应的比例尺控件
+    BM.control.scale ({maxWidth:240, metric:true, imperial:false, position: 'bottomleft'}).addTo (map);
+    //只在结尾处添加一个箭头
+    var arrow = BM.polyline([[37,95],[40,102]]).addTo(map);
+    var arrowHead = BM.polylineDecorator(arrow, {
+        patterns: [
+            {offset: '100%', repeat: 0, symbol: BM.Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
+        ]
+    }).addTo(map);
+
+    //多多边形添加一个边框
+    var polygon = BM.polygon([[[34,108],[35,107],[36,112],[35,115],[33,114]], [[34,111],[34,112],[35,113],[35,109]]], {color: "#ff7800", weight: 1}).addTo(map);
+    var pd = BM.polylineDecorator(polygon, {
+        patterns: [
+            {offset: 0, repeat: 10, symbol: BM.Symbol.dash({pixelSize: 0})}
+        ]
+    }).addTo(map);
+
+    var pathPattern = BM.polylineDecorator(
+        [[29.543519000000003,101.530167],[29.808981000000003,101.104715],[30.056511,100.444239],[30.217430999999998,99.24121099999999],[30.476537,98.773488],[30.377111,98.293931],[30.200274999999998,97.999737],[29.860605999999997,98.585747],[29.672607,98.289848],[29.863343999999998,97.548963],[29.774563999999998,97.12495799999999],[29.498612,96.893964],[29.435619000000003,96.046936],[29.041792,94.881219],[28.548541,93.503112],[27.930749,91.608499],[27.547722999999998,90.218041],[27.095761000000003,89.05837],[26.282477999999998,88.821537],[25.409508000000002,88.398566],[24.833574,88.653899],[24.039720000000003,89.011655]],
+        {
+            patterns: [
+                { offset: 12, repeat: 25, symbol: BM.Symbol.dash({pixelSize: 10, pathOptions: {color: '#f00', weight: 2}}) },
+                { offset: 0, repeat: 25, symbol: BM.Symbol.dash({pixelSize: 0}) }
+            ]
+        }
+    ).addTo(map);
+
+    // 在线上添加标注
+    var markerLine = BM.polyline([[38.44773,85.34766],[32.9354,90.66504],[33.01478,99.67383],[38.1707,103.62891],[39.68993,113.34082]], {}).addTo(map);
+    var markerPatterns = BM.polylineDecorator(markerLine, {
+        patterns: [
+            { offset: '5%', repeat: '10%', symbol: BM.Symbol.marker()}
+        ]
+    }).addTo(map);
+
+    var pathPattern = BM.polylineDecorator(
+        [[22.9,99],[24.18,102.6],[25.770000000000003,106],[27.61,107.6],[29.409999999999997,107.9],[31.009999999999998,106.8]],
+        {
+            patterns: [
+                { offset: 0, repeat: 10, symbol: BM.Symbol.dash({pixelSize: 5, pathOptions: {color: '#000', weight: 2, opacity: 1}}) },
+                { offset: '16%', repeat: '33%', symbol: BM.Symbol.marker({rotate: true, markerOptions: {
+                            icon: BM.icon({
+                                iconUrl: '/Public/offline/polyline_arrow/icon_plane.png',
+                                iconAnchor: [16, 16]
+                            })
+                        }})}
+            ]
+        }
+    ).addTo(map);
+
+
+    var multiCoords1 = [
+        [[27.546799999999998,113.209],[28.806800000000003,113.8682],[29.124200000000002,115.6699],[29.4966,117.2958],[31.4266,116.8564],[31.754199999999997,116.1093]],
+        [[28.0193,111.1875],[26.316499999999998,111.1436],[24.9336,112.9893],[24.5278,115.582],[24.8714,117.7353],[25.828699999999998,119.1855],[28.195300000000003,119.1416]],
+        [[25.920499999999997,114.4394],[26.7699,114.9228],[27.606099999999998,116.5488],[27.753999999999998,117.3837]]
+    ];
+    var plArray = [];
+    for(var i=0; i<multiCoords1.length; i++) {
+        plArray.push(BM.polyline(multiCoords1[i]).addTo(map));
+    }
+    BM.polylineDecorator(multiCoords1, {
+        patterns: [
+            {offset: 25, repeat: 50, symbol: BM.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, weight: 0}})}
+        ]
+    }).addTo(map);
+</script>
+</body>
+</html> 

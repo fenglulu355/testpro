@@ -1,0 +1,78 @@
+<!--
+ * @Author: fenglulu
+ * @Date: 2020-10-27 15:03:38
+ * @LastEditors: fenglulu
+ * @LastEditTime: 2020-11-06 14:08:58
+ * @FilePath: \html\jiaojuam.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+	#main{
+		width: 420px;
+		height: 300px;
+		margin:auto;
+		background-color:#999;
+		border:60px solid #333;
+		 box-shadow:5px 5px 34px 3px rgba(0,0,0,0.5) inset;
+	}
+	#top{
+		display: inline-block;
+		width: 160px;
+		height: 240px;
+		margin:30px;
+		font-size: 0;
+		overflow: hidden;
+		box-shadow: inset 13px 8px 1px 16px #555, 3px 3px 10px 10px blueviolet;
+	}
+	#top>img{
+		width: 100%;
+		height: 100%;
+	}
+	#bottom{
+		display: inline-block;
+		width:120px;
+		height: 180px;
+		margin:30px;
+		font-size:0;
+		overflow:hidden;
+	}
+	#bottom>a>img{
+		width: 100%;
+		animation: banner 14s linear infinite;
+	}
+	#bottom:hover>a>img{
+	}
+	@keyframes banner{
+		0%{transform:translateY(0%)}
+		100%{transform:translateY(-700%)}
+	}
+	</style>
+</head>
+<body>
+  <div id="main">
+    <div id="top">
+	  <img id="img1" src="https://img04.sogoucdn.com/app/a/100520020/b2ab8e333baa5f0a2d55b636a4cc3bf8" alt="">
+	  <img id="img2" src="https://img01.sogoucdn.com/app/a/100520020/16f8615c913052c09e03c949a28fe38e" alt="">
+	  <img id="img3" src="https://img02.sogoucdn.com/app/a/100520020/7ccafa1f4e76847b8559f7586fd91c60" alt="">
+	  <img id="img4" src="http://n.sinaimg.cn/ent/4_img/upload/79e6b5ad/160/w1024h1536/20201017/bad9-kaqzmiw2351317.jpg" alt="">
+	  <img id="img5" src="http://n.sinaimg.cn/ent/4_img/upload/79e6b5ad/160/w1024h1536/20201017/f4ae-kaqzmiw2351377.jpg" alt="">
+	  <img id="img6" src="http://n.sinaimg.cn/ent/4_img/upload/79e6b5ad/160/w1024h1536/20201017/4fc0-kaqzmiw2351366.jpg" alt="">
+	  <img id="img7" src="http://n.sinaimg.cn/ent/4_img/upload/79e6b5ad/160/w1024h1536/20201017/23d1-kaqzmiw2351429.jpg" alt="">
+    </div>
+    <div id="bottom">
+	  <a href="#img1"><img src="https://img04.sogoucdn.com/app/a/100520020/b2ab8e333baa5f0a2d55b636a4cc3bf8" alt=""></a>
+	  <a href="#img2"><img src="https://img01.sogoucdn.com/app/a/100520020/16f8615c913052c09e03c949a28fe38e" alt=""></a>
+	  <a href="#img3"><img src="https://img02.sogoucdn.com/app/a/100520020/7ccafa1f4e76847b8559f7586fd91c60" alt=""></a>
+	  <a href="#img4"><img src="http://n.sinaimg.cn/ent/4_img/upload/79e6b5ad/160/w1024h1536/20201017/bad9-kaqzmiw2351317.jpg" alt=""></a>
+	  <a href="#img5"><img src="http://n.sinaimg.cn/ent/4_img/upload/79e6b5ad/160/w1024h1536/20201017/f4ae-kaqzmiw2351377.jpg" alt=""></a>
+	  <a href="#img6"><img src="http://n.sinaimg.cn/ent/4_img/upload/79e6b5ad/160/w1024h1536/20201017/4fc0-kaqzmiw2351366.jpg" alt=""></a>
+	  <a href="#img7"><img src="http://n.sinaimg.cn/ent/4_img/upload/79e6b5ad/160/w1024h1536/20201017/23d1-kaqzmiw2351429.jpg" alt=""></a>
+	  <a href="#img1"><img src="https://img04.sogoucdn.com/app/a/100520020/b2ab8e333baa5f0a2d55b636a4cc3bf8" alt=""></a>
+    </div>
+  </div>
+</body>
+</html>

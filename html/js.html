@@ -1,0 +1,72 @@
+<!--
+ * @Author: fenglulu
+ * @Date: 2020-10-30 09:55:58
+ * @LastEditors: fenglulu
+ * @LastEditTime: 2020-11-17 10:06:21
+ * @FilePath: \html\js.html
+-->
+<!DOCTYPE html>
+<!-- 随机选择名字 -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 100%;
+            height: 450px;
+            text-align: center;
+            line-height: 450px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div0"></div>
+
+</body>
+<script>
+    var arr = [
+        "杨杨1", "杨杨2", "杨杨3", "杨杨4",
+        "杨杨5", "杨杨6", "杨杨7", "杨杨8",
+        "杨杨9", "杨杨10", "杨杨11", "杨杨12", "杨杨13",
+        "杨杨14", "杨杨15", "杨杨16", "杨杨17", "杨杨18",
+        "杨杨19", "杨杨20", "杨杨21", "杨杨22", "杨杨23",
+        "杨杨24", "杨杨25", "杨杨26", "杨杨27", "杨杨28",
+        "杨杨29", "杨杨30", "杨杨31", "杨杨32", "杨杨33",
+        "杨杨34", "杨杨35", "杨杨36", "杨杨37", "王雪松", "杨杨38"
+    ];
+    var n = 0,
+        bool = true;
+    init();
+    function init() {
+        var div = document.getElementById("div0");
+        arr.sort(function () {
+            return Math.random() - 0.5;
+        });
+        document.onclick = function (e) {
+            arr.splice((n === 0 ? arr.length - 1 : n - 1), 1);
+            bool = !bool;
+        };
+        setInterval(animation, 1000, div);
+    }
+    function animation(div) {
+        if (!bool) return;
+        div.innerHTML = arr[n];
+        n++;
+        if (n > arr.length - 1) n = 0;
+    }
+
+
+    let aaa = '106.89671776435247-39.38013741813727&106.89918043282182-39.38012195482736&106.89915118367618-39.37301450362847&106.89369315475714-39.37301637163668&106.89388198961302-39.37505250558906&106.89341762349322-39.37691421259062&106.89404870794662-39.37859068828518&106.89464917781513-39.37886215919571'
+    let b, arrs = [], item
+    b = aaa.split('&')
+    for (let i = 0; i < b.length; i++) {
+        item = b[i].split('-')
+        arrs.push(item)
+    }
+    console.log(arrs)
+</script>
+
+</html>

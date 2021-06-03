@@ -1,0 +1,173 @@
+body {
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \\5FAE\8F6F\96C5\9ED1, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #515a6e;
+    background-color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 去除标签的默认间距 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 解决body直接子元素设置百分比高度无法获取的问题 */
+html,
+body {
+    height: 100%;
+}
+
+/* 去除超链接默认下划线 */
+a {
+    text-decoration: none;
+}
+
+/* 解决因图片撑起容器高度产生偏差的问题  */
+img {
+    vertical-align: middle;
+}
+
+/* 去除列表项目标号 */
+ul,
+li {
+    list-style: none;
+}
+
+/* 去除表单元素的边框和轮廓 */
+input,
+button,
+textarea {
+    outline: none;
+    border: none;
+}
+
+/* 浮动相关 */
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.clearFix {
+    zoom: 1;
+}
+
+.clearFix:after {
+    content: '';
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+
+
+.employeeInfoHtml .choseClass {
+    border: none;
+    background: #d7d7d7;
+}
+
+.employeeInfoHtml header {
+    height: 46px;
+    background: #f1f1f1;
+    font-size: 16px;
+    text-align: center;
+    line-height: 46px;
+}
+
+.employeeInfoHtml .container {
+    width: 100%;
+}
+
+.employeeInfoHtml .container .img {
+    width: 160px;
+    height: 144px;
+    margin: 15px auto;
+}
+
+.employeeInfoHtml .container .img img {
+    width: 160px;
+    height: 144px;
+}
+
+.employeeInfoHtml .userName {
+    text-align: center;
+}
+
+.employeeInfoHtml ul {
+    width: 95%;
+    height: 30px;
+    display: flex;
+    margin: 10px auto;
+}
+
+.employeeInfoHtml .ulClass li {
+    width: 33%;
+}
+
+.employeeInfoHtml ul li {
+    width: 50%;
+    text-align: center;
+    list-style: none;
+    line-height: 28px;
+    color: #323232;
+    background: #f1f1f1;
+    border: 1px solid #787878;
+}
+
+.employeeInfoHtml .baseInfo {
+    margin: 0px auto;
+    width: 60%;
+}
+
+.employeeInfoHtml .baseInfo p {
+    line-height: 26px;
+}
+
+.employeeInfoHtml .badInfo {
+    margin-top: 20px;
+    padding-left: 20px;
+}
+
+.employeeInfoHtml .badInfo h3 {
+    margin-top: 30px;
+}
+
+.employeeInfoHtml .badInfo span {
+    margin-right: 10px;
+}
+
+.employeeInfoHtml .tab-item {
+    display: none;
+}
+
+.employeeInfoHtml .show {
+    display: block;
+}
+
+.employeeInfoHtml .unshow {
+    display: none;
+}
+
+.employeeInfoHtml #content {
+    width: 95%;
+    margin: 50px auto;
+}
+
+.employeeInfoHtml #content>div {
+    display: none;
+}
+
+.employeeInfoHtml #content>.show {
+    display: block;
+}

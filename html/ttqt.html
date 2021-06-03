@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style type="text/css">
+    body {
+        overflow: hidden;
+    }
+</style>
+<body>
+    <script>
+        class Ball{
+//            构造函数
+            constructor(_r,_color){//传入随机数(20~50)和随机颜色
+                this.r=_r;//随机数(20~50) 球的高宽->21  22行代码
+                this.color=_color;//随机颜色
+                this.speed=2;//速度
+                console.log(Math.round(Math.random()));
+                this.speedX=20 * (Math.random() * 2 - 1);//速度
+                this.elem=this.create();//生成div
+            }
+            create(){//生成小球
+                if(this.elem) return this.elem;//如果小球已被创建，返回被创建的球
+                let div=document.createElement("div");//创建div
+                Object.assign(div.style,{//给创建div添加样式
+                    width: this.r+"px",
+                    height: this.r+"px",
+                    backgroundColor: this.color,
+                    position: "absolute",
+                    borderRadius: this.r/2+"px"
+                });
+                return div;
+            }
+            setLeft(value){//距左边距
+                this.elem.style.left=value+"px";
+            }
+            appendTo(parent){//往parent里添加球div
+                parent.appendChild(this.elem);
+            }
+            update(_color){
+                this.speed+=0.5;//加速
+                //因为球已定位    所以球的top属性的值>html的可视化窗口高度-球的高度（球到页面的底部）
+                if(this.elem.offsetTop>document.documentElement.clientHeight-this.elem.offsetHeight){
+                    this.speed=-this.speed;//速度取反
+                }
+                if(this.elem.offsetLeft < 0 || this.elem.offsetLeft >= document.documentElement.clientWidth){
+                    this.speedX=-this.speedX;//速度取反
+                }
+                this.elem.style.top=this.elem.offsetTop+this.speed+"px";//下落 球的top+=speed
+                this.elem.style.left=this.elem.offsetLeft+this.speedX+"px";//下落 球的left+=speed
+            }
+        }
+ 
+        let balls=[];//存放生成的球
+        let time=10;//防抖初始值
+       /* 函数防抖（debounce）：当持续触发事件时，一定时间段内没有再触发事件，
+        事件处理函数才会执行一次，如果设定的时间到来之前，又一次触发了事件，就重新开始延时。*/
+        init();
+        function init() {
+            createBall(); //创建小球
+            setInterval(animation,16); //循环运行函数
+        }
+ 
+        function createBall() { //创建小球
+            if (balls.length > 50) return;
+            let ball=new Ball(Math.random()*30+20,randomColor());//调用Ball类，传入一个随机数(20~50) 颜色
+            ball.setLeft(Math.random()*1280);//设置距左距离 （0~1000）
+            ball.speed=Math.floor(Math.random()*6+2);//速度（2~8）
+            ball.appendTo(document.body);//往body里添加球div
+            balls.push(ball);//把生成的球放入数组balls中
+        }
+ 
+        function animation() {
+            for(let i=0;i<balls.length;i++){
+                balls[i].update(randomColor());//每个球执行update
+            }
+//            防抖
+            time--;
+            if(time>0)return;
+//            执行了10次后进入下面的语句
+            time=10;
+            createBall();//利用防抖延时创建小球
+        }
+        function randomColor() {//随机生成颜色rgba
+            let col="rgba(";
+            for(let i=0;i<3;i++){
+                col+=Math.floor(Math.random()*256)+",";
+            }
+            col+="1)";
+            return col;
+        }
+    </script>
+</body>
+</html>

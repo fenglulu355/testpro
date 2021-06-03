@@ -1,0 +1,116 @@
+<html>
+
+<head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!--
+        以下CSS地址请在安装软件了替换成本地的地址
+        CSS地址请使用:
+        http://localhost:9000/bigemap.js/v2.1.0/bigemap.css
+        软件下载地址 http://www.bigemap.com/reader/download/detail201802017.html
+    -->
+    <link href='http://www.bigemap.com:9000/bigemap.js/v2.1.0/bigemap.css' rel='stylesheet' />
+    <!--
+        JS地址请使用：
+        http://localhost:9000/bigemap.js/v2.1.0/bigemap.js
+    -->
+    <script src='http://www.bigemap.com:9000/bigemap.js/v2.1.0/bigemap.js'></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .inputbox {
+            width: 420px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .lat {
+            width: 150px;
+
+        }
+
+        .lng {
+            width: 150px;
+        }
+
+        .text {
+            width: 50px;
+        }
+
+        .iptbox {
+            position: fixed;
+            top: 150px;
+            left: 100px;
+            z-index: 1111111111;
+        }
+
+        .save {
+            width: 50px;
+            height: 20px;
+            line-height: 20px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .save:hover {
+            color: red;
+        }
+    </style>
+    <title>Google Map Streets</title>
+</head>
+
+<body>
+    <div id='map'></div>
+    <div class="iptbox">
+        <div id="ul">
+            <div id="li" class="inputbox">
+                <input class="lng" type="text" id="lng" placeholder="lng">
+                <input class="lat" type="text" id="lat" placeholder="lat">
+                <input class="text" type="text" id="text" placeholder="text">
+                <div class="save" id="save" onclick="add()">保存</div>
+            </div>
+        </div> 
+    </div> 
+    </div>
+</body>
+<script>
+    // 软件配置信息地址，软件安装完成之后使用本地地址，如：http://localhost:9000
+    BM.Config.HTTP_URL = 'https://olmap.zolbon.com:3000';
+    // BM.Config.HTTP_URL = 'http://www.bigemap.com:9000';
+
+    // 在ID为map的元素中实例化一个地图，并设置地图的ID号为 bigemap.baidu-map，ID号程序自动生成，无需手动配置，并设置地图的投影为百度地图 ，中心点，默认的级别和显示级别控件
+    var map = BM.map('map', 'bigemap.googlemap-satellite', { center: [30.593528634951593, 104.06578392147716], zoom: 16, zoomControl: false, attributionControl: false });
+    //实例化航拍的图
+    var offline = BM.tileLayer('bigemap.googlemap-satellite');
+    //实例化谷歌卫星地图
+    var google_satellite = BM.tileLayer('bigemap.googlemapen-satellite');
+    //将两个图层添加在地图上面
+    google_satellite.addTo(map);
+    offline.addTo(map)
+    function add(e) {
+        console.log(e)
+        lat = document.getElementById('lat').value;
+        lng = document.getElementById('lng').value;
+        text = document.getElementById('text').value;
+        marker = BM.marker([lat, lng]).addTo(map);
+        marker.bindTooltip(text).openTooltip();
+        marker.addTo(map);
+        // map.setView([lng, lat])
+        marker.on('click', function (res) {
+            res.target.remove()
+        })
+    }
+</script>
+
+</html>

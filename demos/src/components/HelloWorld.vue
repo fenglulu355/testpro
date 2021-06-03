@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <ul>
+  <video src="rtsp://admin:PIAXNG@192.168.1.68:554/h264/ch1/main/av_stream"></video>
+    <!-- <ul>
       <li>
         <p class="title">
           echarts
@@ -55,7 +56,7 @@
           <router-link to="/tblist/list">表格列表</router-link>
         </div>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://blog-static.cnblogs.com/files/jacklzx/autoPlay.css">
+    <script src="https://blog-static.cnblogs.com/files/jacklzx/animate.js"></script>
+    <script src="https://blog-static.cnblogs.com/files/jacklzx/autoPlay.js"></script>
+</head>
+<style>
+    li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background-color: #00e1ff;
+    }
+
+    .focus {
+        overflow: hidden;
+        position: relative;
+        width: 721px;
+        height: 455px;
+        margin: 100px auto;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.6);
+        border-radius: 40px;
+    }
+
+    .focus ul {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 600%;
+    }
+
+    .focus ul li {
+        float: left;
+    }
+
+    .arrow-l {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: -12px;
+        margin-top: -20px;
+        width: 40px;
+        height: 40px;
+        background: rgba(0, 0, 0, .3);
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 0 50% 50% 0;
+        z-index: 999;
+    }
+
+    .arrow-r {
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: -12px;
+        margin-top: -20px;
+        width: 40px;
+        height: 40px;
+        background: rgba(0, 0, 0, .3);
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 50% 0 0 50%;
+        z-index: 999;
+    }
+
+    .circle {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .circle li {
+        float: left;
+        width: 12px;
+        height: 12px;
+        border: 2px solid rgba(255, 255, 255, .5);
+        margin: 0 4px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .current {
+        background-color: #fff;
+        box-shadow: 0 0 10px #fff;
+    }
+</style>
+
+<body>
+    <div class="focus">
+        <!-- 左侧按钮 -->
+        <a href="javascript:;" class="arrow-l">&lt;</a>
+        <!-- 右侧按钮 -->
+        <a href="javascript:;" class="arrow-r">&gt;</a>
+        <!-- 滚动区域 -->
+        <ul>
+            <li>
+                <a href="javascript:;"><img src="https://s1.ax1x.com/2020/10/12/0W1wlt.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="javascript:;"><img src="https://s1.ax1x.com/2020/10/12/0W3nHS.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="javascript:;"><img src="https://s1.ax1x.com/2020/10/12/0Wtrmq.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="javascript:;"><img src="https://s1.ax1x.com/2020/10/12/0W1NYd.jpg" alt=""></a>
+            </li>
+        </ul>
+        <!-- 小圆圈 -->
+        <ol class="circle">
+        </ol>
+    </div>
+</body>
+<script>
+    window.addEventListener('load', function () {
+        // 获取元素
+        var arrow_l = document.querySelector('.arrow-l');
+        var arrow_r = document.querySelector('.arrow-r');
+        var focus = document.querySelector('.focus');
+        var focusWidth = focus.offsetWidth;
+        // 自定义动画函数animate的参数，表示动画间隔
+        var step = 5;
+        // 鼠标经过focus 就显示左右按钮，停止计时器
+        focus.addEventListener('mouseenter', function () {
+            arrow_l.style.display = 'block';
+            arrow_r.style.display = 'block';
+            clearInterval(timer);
+            timer = null; // 清空计时器
+        });
+        // 鼠标离开focus 就隐藏左右按钮，调用定时器
+        focus.addEventListener('mouseleave', function () {
+            arrow_l.style.display = 'none';
+            arrow_r.style.display = 'none';
+            timer = setInterval(function () {
+                // 手动调用点击事件
+                arrow_r.click();
+            }, 2000);
+        });
+
+        var ul = focus.querySelector('ul');
+        var ol = focus.querySelector('.circle');
+        for (var i = 0; i < ul.children.length; i++) {
+            // 创建 li
+            var li = document.createElement('li');
+            // 设置自定义属性，记录小圆圈索引号
+            li.setAttribute('index', i);
+            // li插入ol
+            ol.appendChild(li);
+            // 小圈圈排他思想 生成圈圈同时 直接绑定事件
+            li.addEventListener('click', function () {
+                for (var i = 0; i < ol.children.length; i++) {
+                    ol.children[i].className = '';
+                }
+                this.className = 'current';
+                // 点击小圈圈，移动图片，移动的是ul
+                // 点击li，拿到当前的索引号
+                var index = this.getAttribute('index');
+                // 当点击了li之后，就要把index给num，实现同步
+                num = index;
+                // 当点击了li之后，就要把index给circle，实现同步
+                circle = index;
+                animate(ul, -index * focusWidth, step);
+            });
+        }
+        // ol里第一个li的类名设置为current
+        ol.children[0].className = 'current';
+        var num = 0;
+        // circle控制小圆圈的播放
+        var circle = 0;
+        // 克隆第一章图片li，放到ul最后面
+        // 要在生成小圆圈之后克隆
+        var first = ul.children[0].cloneNode(true);
+        ul.appendChild(first);
+        // 点击右侧按钮，图片滚动
+        arrow_r.addEventListener('click', function () {
+            // 如果到了最后一张图片，ul要快速复原：left改为0
+            if (num == ul.children.length - 1) {
+                ul.style.left = 0;
+                num = 0;
+            }
+            num++;
+            animate(ul, -num * focusWidth, step);
+            // circle控制小圆圈的播放
+            circle++;
+            circle = circle == ol.children.length ? 0 : circle;
+            circleChange();
+        });
+
+        // 点击左侧按钮，图片滚动
+        arrow_l.addEventListener('click', function () {
+            if (num == 0) {
+                num = ul.children.length - 1;
+                ul.style.left = -num * focusWidth + 'px';
+            }
+            num--;
+            animate(ul, -num * focusWidth, step);
+            // circle控制小圆圈的播放
+            circle--;
+            circle = circle < 0 ? (ol.children.length - 1) : circle;
+            circleChange();
+        });
+
+        // 小圈圈改变样式
+        function circleChange() {
+            // 排他其他
+            for (var i = 0; i < ol.children.length; i++) {
+                ol.children[i].className = '';
+            }
+            // 留下自己
+            ol.children[circle].className = 'current';
+        }
+
+        // 自动播放功能
+        var timer = setInterval(function () {
+            // 手动调用点击事件
+            arrow_r.click();
+        }, 1000);
+    });
+     function animate(obj, target, time, callback) {
+        // 先清除以前的定时器，只保留当前的一个定时器执行
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            // 步长值写到定时器的里面，并设置为整数
+            var step = (target - obj.offsetLeft) / 10;
+            step = step > 0 ? Math.ceil(step) : Math.floor(step);
+            if (obj.offsetLeft == target) {
+                clearInterval(obj.timer);
+                // 回调函数写到定时器结束里面
+                callback && callback();
+            }
+            obj.style.left = obj.offsetLeft + step + 'px';
+        }, time);
+    }
+</script>
+
+</html>

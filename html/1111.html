@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!--
+        以下CSS地址请在安装软件了替换成本地的地址
+        CSS地址请使用:
+        http://localhost:9000/bigemap.js/v2.1.0/bigemap.css
+        软件下载地址 http://www.bigemap.com/reader/download/detail201802017.html
+    -->
+    <link href="https://cdn.bootcss.com/Buttons/2.0.0/css/buttons.min.css" rel="stylesheet">
+    <link href='http://www.bigemap.com:9000/bigemap.js/v2.1.0/bigemap.css' rel='stylesheet' />
+    <!--
+        JS地址请使用：
+        http://localhost:9000/bigemap.js/v2.1.0/bigemap.js
+    -->
+    <script src='http://www.bigemap.com:9000/bigemap.js/v2.1.0/bigemap.js'></script>
+    <!--
+        引用插件，对应下载地址：
+        http://www.bigemap.com/Public/offline/track.zip
+    -->
+    <script type="text/javascript" src="http://www.bigemap.com/Public/offline/js/moveMarker.js"></script>
+    <script type="text/javascript" src="http://www.bigemap.com/Public/offline/js/bm.geometryutil.js"></script>
+    <script type="text/javascript" src="http://www.bigemap.com/Public/offline/polyline_arrow/patternUtils.js"></script>
+    <script type="text/javascript" src="http://www.bigemap.com/Public/offline/polyline_arrow/symbol.js"></script>
+    <script type="text/javascript"
+        src="http://www.bigemap.com/Public/offline/polyline_arrow/polyline_arrow.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #control {
+            background-color: #eee;
+            padding: 15px;
+            position: absolute;
+            bottom: 0;
+            right: 20px;
+            z-index: 9;
+        }
+
+        .button {
+            width: 200px;
+            display: inline-block;
+        }
+    </style>
+    <title>Google Map Streets</title>
+    <style>
+        line {
+            stroke: black;
+            stroke-width: 2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- <svg width="200" height="200" viewPort="0 0 200 300" class="svg" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="0" x2="200" y2="50" stroke="red" stroke-width="2" marker-end="url(#arrow)" />
+        
+    </svg> -->
+
+
+    <div id="control">
+        <p>轨迹控制</p>
+        <div>
+            <a class="button button-tiny button-rounded button-primary" href="javascript:void (0)">
+                开始
+            </a>
+        </div>
+        <div>
+            <a class="button button-tiny button-rounded button-primary" href="javascript:void (0)">
+                暂停
+            </a>
+        </div>
+        <div>
+            <a class="button button-tiny button-rounded button-primary" href="javascript:void (0)">
+                继续
+            </a>
+        </div>
+        <div>
+            <a class="button button-tiny button-rounded button-primary" href="javascript:void (0)">
+                加速
+            </a>
+        </div>
+        <div>
+            <a class="button button-tiny button-rounded button-primary" href="javascript:void (0)">
+                减速
+            </a>
+        </div>
+    </div>
+    <div id='map'></div>
+    <script>// 软件配置信息地址，软件安装完成之后使用本地地址，如：http://localhost:9000
+        BM.Config.HTTP_URL = 'http://www.bigemap.com:9000';
+        // 在ID为map的元素中实例化一个地图，并设置地图的ID号为 bigemap.googlemap-streets，ID号程序自动生成，无需手动配置，并设置地图的投影为百度地图 ，中心点，默认的级别和显示级别控件
+        var map = BM.map('map', 'bigemap.googlemap-streets', { center: [30.4, 104.5], zoom: 7, zoomControl: true, attributionControl: false });
+        var el = document.querySelectorAll('.button');
+        var multiCoords1 = [[30, 104], [30.1, 104.2], [30.2, 104.1], [30.1, 104.35], [30.2, 104.3], [30.1, 104.1]];
+        var plArray = [];
+        for (var i = 0; i < multiCoords1.length; i++) {
+            plArray.push(BM.polyline(multiCoords1).addTo(map));
+        }
+    
+        BM.polylineDecorator(multiCoords1, {
+            patterns: [
+                { offset: 25, repeat: 50, symbol: BM.Symbol.arrowHead({ pixelSize: 15, pathOptions: { fillOpacity: 1, weight: 0 } }) }
+            ]
+        }).addTo(map);
+        BM.polylineDecorator(multiCoords1, {
+            patterns: [
+                { offset: 25, repeat: 50, symbol: BM.Symbol.arrowHead({ pixelSize: 15, pathOptions: { fillOpacity: 1, weight: 0 } }) }
+            ]
+        }).addTo(map);
+        var polyline = BM.polyline(multiCoords1).addTo(map);
+        map.fitBounds(polyline.getBounds());
+        var m = BM.marker([30, 104], {
+            icon: BM.icon({
+                iconUrl: 'http://www.bigemap.com/Public/offline/car.png',
+                iconAnchor: [25, 15],
+            })
+        }).addTo(map);
+
+
+
+        var cn = BM.marker(map.getCenter()).addTo(map);
+        //添加一条线段也记录已经路过的点
+        var passed = BM.polyline([[]], { color: 'red', }).addTo(map);
+        m.on('update_position', function (e) {
+            //每次坐标更新。然后也更新路径
+            passed.setLatLngs(e.path);
+            map.panTo(e.path[e.path.length - 1])
+
+            // console.log(e)
+        });
+        el[0].onclick = function () {
+            m.moveAlong(polyline, 1000);
+        };
+
+        el[1].onclick = function () {
+            m.pauseMove();
+        };
+
+        el[2].onclick = function () {
+            m.resumeMove();
+        };
+        el[3].onclick = function () {
+            m.setSpeed(m.getSpeed() + 100);
+        };
+        el[4].onclick = function () {
+            m.setSpeed(m.getSpeed() - 100);
+        };
+    </script>
+</body>
+
+</html>

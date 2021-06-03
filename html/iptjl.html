@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS input输入节流</title>
+    <style>
+        input
+        {
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+    <input type="text">
+    <script>
+        /*
+        *  节流
+        *   设置在input输入时,间隔一定时间后再进行判断设置等内容,在间隔的时间内不再做任何处理
+        *
+        * */
+        var text=document.querySelector("input");
+        var ids=0;
+        text.addEventListener("input",inputHandler);
+ 
+        function inputHandler(e) {
+            if(ids) return;
+            ids=setTimeout(textContentHandler,500,this);
+ 
+        }
+        function textContentHandler(elem) {
+            console.log(elem.value);
+            clearTimeout(ids);
+            ids=0;
+ 
+        }
+    </script>
+</body>
+</html>

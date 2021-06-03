@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <div id="app">
+        <div style="line-height: 60px;font-size: 18px;">
+            城市选择器
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <select class="form-control" v-model="proValue" @change="selectPro">
+                    <option :value="item.name" v-for="item in addrData">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="form-control" v-model="cityValue" @change="selectCity">
+                    <option :value="item.name" v-for="item in cityData">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="form-control" v-model="areaValue" @change="selectArea">
+                    <option :value="item.name" v-for="item in areaData">{{item.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="http://520yaya.vip/js/addr.js"></script>
+</body>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            proValue: '江西省',
+            cityValue: '九江市',
+            areaValue: '修水县',
+            cityData: [],
+            areaData: [],
+            isSelectPro: false,
+            isSelectCity: false,
+        },
+        computed: {
+            addrData: function () {
+                return addrData;
+            },
+
+        },
+        mounted: function () {
+            this.$nextTick(function () {
+                this.selectPro();
+                this.selectCity();
+            });
+
+        },
+        methods: {
+            selectPro() {
+                this.addrData.forEach((ev) => {
+                    if (ev.name == this.proValue) {
+                        this.cityData = ev.city;
+                    }
+                });
+                if (!this.isSelectPro) return this.isSelectPro = true;
+                //设置默认选中第一个，看起来会饱满一点
+                this.cityValue = this.cityData[0].name;
+                this.selectCity();
+            },
+            selectCity() {
+                this.cityData.forEach((ev) => {
+                    if (ev.name == this.cityValue) {
+                        this.areaData = ev.area;
+                    }
+                });
+                if (!this.isSelectCity) return this.isSelectCity = true;
+                this.areaValue = this.areaData[0].name;
+            },
+            selectArea() {
+                // setTimeout延时
+                setTimeout(() => {
+                    alert('你选中了' + vm.proValue + ":" + vm.cityValue + ":" + vm.areaValue)
+                })
+            }
+        }
+    })
+</script>
+
+</html>

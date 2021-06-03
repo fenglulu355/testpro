@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        div {
+            width: 100%;
+            height: 455px;
+            background-image: url("./img/banner.png");
+            background-size: 100% 100%;
+            transition: all 1s;
+        }
+
+        img {
+            width: 10%;
+            /* height: 100%; */
+            position: absolute;
+            display: block;
+            right: 50px;
+            border: 2px solid rgba(0, 0, 0, 0);
+            top: 40px
+        }
+
+        img:nth-child(1) {
+            border: 2px solid #ff9d00;
+        }
+
+        img:nth-child(2) {
+            top: 121px;
+        }
+
+        img:nth-child(3) {
+            top: 202px;
+        }
+
+        img:nth-child(4) {
+            top: 283px;
+        }
+
+        img:nth-child(5) {
+            top: 364px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <img src="./img/banner.png">
+        <img src="./img/bg.png">
+        <img src="./img/banner.png">
+        <img src="./img/bg.png">
+        <img src="./img/banner.png">
+    </div>
+    <script>
+        var pre;
+        var imgArr = ["./img/banner.png", "./img/bg.png", "./img/banner.png", "./img/bg.png", "./img/banner.png"];
+        init();
+        function init() {
+            var imgs = document.getElementsByTagName("img");
+            for (var i = 0; i < imgs.length; i++) {
+                imgs[i].addEventListener("click", clickHandler);
+            }
+            pre = imgs[0];
+        }
+
+        function clickHandler(e) {
+            var arr = Array.from(this.parentElement.children);
+            var index = arr.indexOf(this);
+            var div = document.querySelector("div");
+            div.style.backgroundImage = "url(" + imgArr[index] + ")";
+            pre.style.border = "2px solid rgba(0,0,0,0)";
+            pre = this;
+            pre.style.border = "2px solid #ff9d00";
+        }
+    </script>
+</body>
+
+</html>

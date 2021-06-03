@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三级目录</title>
+</head>
+<body>
+   <script>
+       var list=[
+           { name:"第一章",value:[
+               {name:"第一节",value:["第一段","第二段","第三段","第四段"]},
+               {name:"第二节",value:["第一段","第二段","第三段","第四段"]},
+               {name:"第三节",value:["第一段","第二段","第三段","第四段"]},
+               {name:"第四节",value:["第一段","第二段","第三段","第四段"]}
+           ]},
+           { name:"第二章",value:[
+               {name:"第一节",value:["第一段","第二段","第三段","第四段"]},
+               {name:"第二节",value:["第一段","第二段","第三段","第四段"]},
+               {name:"第三节",value:["第一段","第二段","第三段","第四段"]},
+               {name:"第四节",value:["第一段","第二段","第三段","第四段"]}
+           ]},
+           { name:"第三章",value:[
+               {name:"第一节",value:["第一段","第二段","第三段","第四段"]},
+               {name:"第二节",value:["第一段","第二段","第三段","第四段"]},
+               {name:"第三节",value:["第一段","第二段","第三段","第四段"]},
+               {name:"第四节",value:["第一段","第二段","第三段","第四段"]}
+           ]}
+       ];
+//     判断对象是不是数组
+       init();
+       function init() {
+           createUl(list,document.body);
+           var ul=document.querySelector("ul");
+           ul.addEventListener("click",clickUlHandler)
+       }
+       function createUl(_list,parent) {
+           var ul=document.createElement("ul");
+           if(Array.isArray(_list)){
+               for(var i=0;i<_list.length;i++){
+                   var li=document.createElement("li");
+                   if(_list[i].name){
+                       li.textContent=_list[i].name;
+                   }else{
+                       li.textContent=_list[i];
+                   }
+                   if(Array.isArray(_list[i].value)){
+                       createUl(_list[i].value,li);
+                   }
+                   ul.appendChild(li);
+               }
+           }
+           parent.appendChild(ul);
+       }
+      /* function clickHandler(e) {
+           e.stopPropagation();
+           if(!this.firstElementChild) return;
+           this.bool=!this.bool;
+           if(this.bool) this.firstElementChild.style.display="none";
+           if(!this.bool) this.firstElementChild.style.display="block";
+       }*/
+       function clickUlHandler(e) {
+           e.stopPropagation();
+           if(e.target.nodeName!=="LI") return;
+           if(!e.target.firstElementChild)return;
+           e.target.bool=!e.target.bool;
+           if(e.target.bool) e.target.firstElementChild.style.display="none";
+           if(!e.target.bool) e.target.firstElementChild.style.display="block";
+       }
+   </script>
+</body>
+</html>
